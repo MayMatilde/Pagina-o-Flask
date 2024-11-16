@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Lista de Produtos da Maymay</title>
+</head>
+<body>
+    <h1>📚Lista de Produtos - Página {{ page }}</h1>
+    <ul id="produto-lista">
+        {% for produto in produtos_on_page %} <!----percorre os produtos-->
+            <li>
+                <strong>{{ produto['nome'] }}</strong><br>
+                <button class="detalhes-btn" data-id="{{ produto['id'] }}" data-descricao="{{ produto['descricao'] }}"> Ver Detalhes
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('arraso.page1', page=page-1) }}" id="prev">Página Anterior</a>
+        {% endif %}
+        <span>Página {{ page }}</span>
+        {% if page < total_pages %}
+            <a href="{{ url_for('arraso.page1', page=page+1) }}" id="next">Próxima Página</a>
+        {% endif %}
+    </div>
+
+    <div class="produto-detalhes" id="produto-detalhes">
+        <h2>Detalhes do Produto</h2>
+        <p id="descricao-produto"></p>
+        <button id="fechar-detalhes">Fechar</button>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
